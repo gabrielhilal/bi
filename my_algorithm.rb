@@ -5,23 +5,21 @@ class MyAlgorithm
   end
 
   def valid?
-    match_all_words?
+    valid_segment?
   end
 
   private
 
-  def match_all_words?
-    grouped_words.values.all? { |w| @dict.include?(w) }
-  end
+  def valid_segment?
+    segment = ''
 
-  def grouped_words
-    index = 0
+    @word.chars.each do |char|
+      segment << char
+      next unless @dict.include?(segment)
 
-    @word.chars.each_with_object(Hash.new('')) do |char, hash|
-      hash[index] += char
-      next unless @dict.include?(hash[index])
-
-      index += 1
+      segment = ''
     end
+
+    segment.empty?
   end
 end
